@@ -1,6 +1,7 @@
 ﻿using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using ImageResizeWebApp.Models;
 using Microsoft.AspNetCore.Http;
 using System;
