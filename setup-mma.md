@@ -87,15 +87,12 @@ az functionapp config appsettings set --name $functionapp --resource-group $reso
   --settings AzureWebJobsStorage=$storageConnectionString THUMBNAIL_CONTAINER_NAME=thumbnails \
   THUMBNAIL_WIDTH=100 FUNCTIONS_EXTENSION_VERSION=~2
 
-
-
-
-NOT YET
-
-
 az functionapp deployment source config --name $functionapp --resource-group $resourceGroupName \
-  --branch master --manual-integration \
-  --repo-url https://github.com/michalmar/file-quick/functions
+  --branch master \
+  --repo-url https://github.com/michalmar/file-quick-functions
 
 
-  
+
+### URL Shortener AKA.MS
+
+
