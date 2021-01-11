@@ -53,6 +53,22 @@ namespace ImageResizeWebApp.Helpers
             return await Task.FromResult(true);
         }
 
+        // public static async Task<List<string>> GetFileUrls(AzureStorageConfig _storageConfig)
+        // {
+            
+        //     // static string storageconn = "DefaultEndpointsProtocol=https;AccountName="+"s"+";AccountKey=xxx;EndpointSuffix=core.windows.net";  
+    
+        //     // static string table1 = "Employee";  
+        //     // static string partitionkey = "Debasis Saha";  
+        //     // static string rowKey = "userC";  
+            
+
+        //     //     CloudStorageAccount storageAcc = CloudStorageAccount.Parse(storageconn);  
+        //     //     CloudTableClient tblclient = storageAcc.CreateCloudTableClient(new TableClientConfiguration());  
+        //     //     CloudTable table = tblclient.GetTableReference(table1);  
+    
+
+        // }
         public static async Task<List<string>> GetThumbNailUrls(AzureStorageConfig _storageConfig)
         {
             List<string> thumbnailUrls = new List<string>();
