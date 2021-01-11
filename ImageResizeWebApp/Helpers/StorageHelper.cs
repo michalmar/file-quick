@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace ImageResizeWebApp.Helpers
 {
@@ -55,7 +56,8 @@ namespace ImageResizeWebApp.Helpers
 
         public static async Task<List<string>> GetLinksUrls(AzureStorageConfig _storageConfig)
         {
-            val storageConnString = "DefaultEndpointsProtocol=https;AccountName=stfilequick;AccountKey=jQ7NeHMwYMnSDwdxGtRjPQzWC/iWND12nwVZuJ0SL/f8zolNZDLu47u4EeQDIpW6gfLc3oEv5gaLzbKBNzCgWA==;EndpointSuffix=core.windows.net";
+            List<string> linksUrls = new List<string>();
+            var storageConnString = "DefaultEndpointsProtocol=https;AccountName=stfilequick;AccountKey=jQ7NeHMwYMnSDwdxGtRjPQzWC/iWND12nwVZuJ0SL/f8zolNZDLu47u4EeQDIpW6gfLc3oEv5gaLzbKBNzCgWA==;EndpointSuffix=core.windows.net";
             var table = TableService.GetTableReference(storageConnString,"ShortLinks");
             // Find books published before 1950 and return the first 5 sorted by author name.
             var query = new TableQuery<LinkEntity>()
@@ -65,9 +67,10 @@ namespace ImageResizeWebApp.Helpers
             var queryResults = table.ExecuteQuery(query);
             foreach (var result in queryResults)
             {
-                Console.WriteLine(result);
+                linksUrls.Add(result.ToString());
+                Console.WriteLine(result.ToString());
             }
-            return await Task.FromResult(queryResults);
+            return await Task.FromResult(linksUrls);
 
         }
         public static async Task<List<string>> GetThumbNailUrls(AzureStorageConfig _storageConfig)
