@@ -84,7 +84,8 @@ namespace ImageResizeWebApp.Controllers
                 if (storageConfig.ImageContainer == string.Empty)
                     return BadRequest("Please provide a name for your image container in Azure blob storage.");
 
-                List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(storageConfig);
+                // List<string> thumbnailUrls = await StorageHelper.GetThumbNailUrls(storageConfig);
+                List<string> thumbnailUrls = await StorageHelper.GetLinksUrls(storageConfig);
                 return new ObjectResult(thumbnailUrls);            
             }
             catch (Exception ex)

@@ -53,22 +53,23 @@ namespace ImageResizeWebApp.Helpers
             return await Task.FromResult(true);
         }
 
-        // public static async Task<List<string>> GetFileUrls(AzureStorageConfig _storageConfig)
-        // {
-            
-        //     // static string storageconn = "DefaultEndpointsProtocol=https;AccountName="+"s"+";AccountKey=xxx;EndpointSuffix=core.windows.net";  
-    
-        //     // static string table1 = "Employee";  
-        //     // static string partitionkey = "Debasis Saha";  
-        //     // static string rowKey = "userC";  
-            
+        public static async Task<List<string>> GetLinksUrls(AzureStorageConfig _storageConfig)
+        {
+            val storageConnString = "DefaultEndpointsProtocol=https;AccountName=stfilequick;AccountKey=jQ7NeHMwYMnSDwdxGtRjPQzWC/iWND12nwVZuJ0SL/f8zolNZDLu47u4EeQDIpW6gfLc3oEv5gaLzbKBNzCgWA==;EndpointSuffix=core.windows.net";
+            var table = TableService.GetTableReference(storageConnString,"ShortLinks");
+            // Find books published before 1950 and return the first 5 sorted by author name.
+            var query = new TableQuery<LinkEntity>()
+                .OrderBy(nameof(LinkEntity.ShortLink))
+                .Take(5);
 
-        //     //     CloudStorageAccount storageAcc = CloudStorageAccount.Parse(storageconn);  
-        //     //     CloudTableClient tblclient = storageAcc.CreateCloudTableClient(new TableClientConfiguration());  
-        //     //     CloudTable table = tblclient.GetTableReference(table1);  
-    
+            var queryResults = table.ExecuteQuery(query);
+            foreach (var result in queryResults)
+            {
+                Console.WriteLine(result);
+            }
+            return await Task.FromResult(queryResults);
 
-        // }
+        }
         public static async Task<List<string>> GetThumbNailUrls(AzureStorageConfig _storageConfig)
         {
             List<string> thumbnailUrls = new List<string>();
