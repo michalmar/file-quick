@@ -15,16 +15,18 @@ namespace ImageResizeWebApp.Helpers
     public static class StorageHelper
     {
 
-        public static bool IsImage(IFormFile file)
+        public static bool IsSupportedFile(IFormFile file)
         {
-            if (file.ContentType.Contains("image"))
-            {
-                return true;
-            }
+            //TODO: for now I accept all files
+            // if (file.ContentType.Contains("image"))
+            // {
+            //     return true;
+            // }
 
-            string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg" };
+            // string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg", ".pptx",".zip",".pdf",".xlsx" };
 
-            return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+            // return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+            return true;
         }
 
         public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName,
