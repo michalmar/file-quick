@@ -57,9 +57,10 @@ namespace ImageResizeWebApp.Helpers
         public static async Task<List<string>> GetLinksUrls(AzureStorageConfig _storageConfig)
         {
             List<string> linksUrls = new List<string>();
-            var storageConnString = "DefaultEndpointsProtocol=https;AccountName=stfilequick;AccountKey=jQ7NeHMwYMnSDwdxGtRjPQzWC/iWND12nwVZuJ0SL/f8zolNZDLu47u4EeQDIpW6gfLc3oEv5gaLzbKBNzCgWA==;EndpointSuffix=core.windows.net";
+            var storageConnString = "DefaultEndpointsProtocol=https;AccountName="+_storageConfig.AccountName+";AccountKey="+_storageConfig.AccountKey+";EndpointSuffix=core.windows.net";
             var table = TableService.GetTableReference(storageConnString,"ShortLinks");
-            // Find books published before 1950 and return the first 5 sorted by author name.
+
+            // Find all links and return top 5
             var query = new TableQuery<LinkEntity>()
                 .OrderBy(nameof(LinkEntity.ShortLink))
                 .Take(5);
@@ -68,7 +69,7 @@ namespace ImageResizeWebApp.Helpers
             foreach (var result in queryResults)
             {
                 linksUrls.Add(result.ToString());
-                Console.WriteLine(result.ToString());
+                // Console.WriteLine(result.ToString());
             }
             return await Task.FromResult(linksUrls);
 
