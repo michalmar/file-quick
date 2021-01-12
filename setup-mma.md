@@ -87,6 +87,12 @@ az functionapp config appsettings set --name $functionapp --resource-group $reso
   --settings AzureWebJobsStorage=$storageConnectionString THUMBNAIL_CONTAINER_NAME=thumbnails \
   THUMBNAIL_WIDTH=100 FUNCTIONS_EXTENSION_VERSION=~2
 
+az functionapp config appsettings set --name $functionapp --resource-group $resourceGroupName \
+  --settings AzureWebJobsStorageName=$blobStorageAccount AzureWebJobsStorageKey=$blobStorageAccountKey 
+
+az functionapp config appsettings set --name $functionapp --resource-group $resourceGroupName \
+  --settings AzureWebJobsStorageSASTokenLenghtHours=72
+
 az functionapp deployment source config --name $functionapp --resource-group $resourceGroupName \
   --branch master \
   --repo-url https://github.com/michalmar/file-quick-functions

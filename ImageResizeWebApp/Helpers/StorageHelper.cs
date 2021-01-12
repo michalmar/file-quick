@@ -75,6 +75,7 @@ namespace ImageResizeWebApp.Helpers
         }
         public static async Task<List<string>> GetThumbNailUrls(AzureStorageConfig _storageConfig)
         {
+            
             List<string> thumbnailUrls = new List<string>();
 
             // Create a URI to the storage account
@@ -88,39 +89,12 @@ namespace ImageResizeWebApp.Helpers
 
             if (container.Exists())
             {
-                // Set the expiration time and permissions for the container.
-                // In this case, the start time is specified as a few 
-                // minutes in the past, to mitigate clock skew.
-                // The shared access signature will be valid immediately.
-                BlobSasBuilder sas = new BlobSasBuilder
+                foreach (BlobItem blobItem in container.GetBlobs())
                 {
-                    Resource = "c",
-                    BlobContainerName = _storageConfig.ThumbnailContainer,
-                    StartsOn = DateTimeOffset.UtcNow.AddMinutes(-5),
-                    ExpiresOn = DateTimeOffset.UtcNow.AddHours(72)
-                };
-
-                sas.SetPermissions(BlobContainerSasPermissions.All);
-
-                // Create StorageSharedKeyCredentials object by reading
-                // the values from the configuration (appsettings.json)
-                StorageSharedKeyCredential storageCredential =
-                    new StorageSharedKeyCredential(_storageConfig.AccountName, _storageConfig.AccountKey);
-
-                // Create a SAS URI to the storage account
-                UriBuilder sasUri = new UriBuilder(accountUri);
-                sasUri.Query = sas.ToSasQueryParameters(storageCredential).ToString();
-
-                foreach (BlobItem blob in container.GetBlobs())
-                {
-                    // Create the URI using the SAS query token.
-                    string sasBlobUri = container.Uri + "/" +
-                                        blob.Name + sasUri.Query;
-
-                    //Return the URI string for the container, including the SAS token.
-                    thumbnailUrls.Add(sasBlobUri);
+                    thumbnailUrls.Add(container.Uri + "/" + blobItem.Name);
                 }
             }
+
             return await Task.FromResult(thumbnailUrls);
         }
     }
